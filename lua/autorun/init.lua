@@ -1,20 +1,9 @@
-local closeFloatingWindow = function (bufnr)
-    local config = vim.api.nvim_win_get_config(bufnr)
-    if config.relative ~= "" then
-        vim.api.nvim_win_close(bufnr, false)
-    end
-end
-
-local createWin = function (lines)
+local createWin = function (bufnr, lines)
 
     local width = 50
     local height = 10
 
-    local bufnr = vim.api.nvim_create_buf(true, true)
     vim.api.nvim_buf_set_lines(bufnr, 0, -1, true, lines)
-    vim.keymap.set("n", "<C-c>", function ()
-        closeFloatingWindow(vim.fn.win_findbuf(bufnr)[1])
-    end)
 
     local opts = {
         relative = "editor",
@@ -28,30 +17,32 @@ local createWin = function (lines)
         border = "single",
     }
 
-    vim.api.nvim_open_win(bufnr, true, opts)
+    return vim.api.nvim_open_win(bufnr, true, opts)
 end
 
---[[
-local CloseAllFloatingWindows = function ()
-    local closed_windows = {}
-    for _, win in ipairs(vim.api.nvim_list_wins()) do
-        local config = vim.api.nvim_win_get_config(win)
-        if config.relative ~= "" then
-            vim.api.nvim_win_close(win, false)
-            table.insert(closed_windows, win)
-        end
-    end
-    print(string.format("Closed %d window: %s", #closed_windows, vim.inspect(closed_windows)))
-end
-
-vim.keymap.set("n", "<C-c>", function ()
-    CloseAllFloatingWindows()
-end)
-]]
 vim.api.nvim_create_autocmd("BufWritePost", {
     group = vim.api.nvim_create_augroup("Autorun", { clear = true }),
     pattern = "**/*.go",
     callback = function ()
-        createWin({ "Tesing", "DeezNutz" })
+        local wins = vim.api.nvim_list_wins()
+        for _, win in ipairs(wins) do
+            local config = vim.api.nvim_win_get_config(win)
+            if config.title ~= nil and config.title[1][1] == "AutoRun" then
+                --[[
+                local allbuf = vim.fn.win_findbuf(win)
+                for _, buf in ipairs(allbuf) do
+                    vim.api.nvim_buf_delete(buf, { force = true })
+                end
+                ]]
+                vim.api.nvim_win_close(win, true)
+            end
+        end
+        local bufnr = vim.api.nvim_create_buf(false, true)
+        local winId = createWin(bufnr, { "Tesing", "DeezNutz" })
+        vim.keymap.set("n", "<C-c>", function ()
+            if vim.api.nvim_win_is_valid(winId) then
+                vim.api.nvim_win_close(winId, false)
+            end
+        end)
     end
 })
