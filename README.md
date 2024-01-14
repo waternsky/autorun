@@ -7,3 +7,14 @@ Autorun is for you.
 ## Solution
 Neovim plugin to run the python and go file on save.
 My first neovim plugin.
+
+## Setup
+
+```lua
+return {
+    "waternsky/autorun",
+    config = function ()
+        require("autorun")
+    end
+}
+```
