@@ -10,6 +10,7 @@ My first neovim plugin.
 
 ## Setup
 
+lazy package manager:
 ```lua
 return {
     "waternsky/autorun",
@@ -18,3 +19,7 @@ return {
     end
 }
 ```
+
+## Credits
+* Neovim documentation (spend most of my time here to write this).
+* [TeejDv](https://www.youtube.com/@teej_dv/videos) has extensive videos for writing plugins.
