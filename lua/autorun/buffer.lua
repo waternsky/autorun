@@ -2,7 +2,7 @@ local ui = require("autorun.ui")
 
 local M = {}
 
-function M.attach_to_buffer(bufnr)
+function M.attach_to_buffer(bufnr, opts)
     vim.api.nvim_create_autocmd("BufWritePost", {
         group = vim.api.nvim_create_augroup("Autorun", { clear = true }),
         pattern = { "*.go", "*.py" },
@@ -12,7 +12,7 @@ function M.attach_to_buffer(bufnr)
             local command = {}
             local extension = filePath:sub(-2, -1)
             if extension == "py" then
-                command = { "python3", filePath }
+                command = { opts.pythoncmd, filePath }
             elseif extension == "go" then
                 command = { "go", "run", filePath }
             else

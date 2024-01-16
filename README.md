@@ -15,7 +15,10 @@ lazy package manager:
 return {
     "waternsky/autorun",
     config = function ()
-        require("autorun")
+        local autorun = require("autorun")
+        autorun.setup({ 
+            pythoncmd = "python3.12"
+        })
     end
 }
 ```
