@@ -17,7 +17,9 @@ return {
     config = function ()
         local autorun = require("autorun")
         autorun.setup({ 
-            pythoncmd = "python3.12"
+            pythoncmd = "python3",
+            title_pos = "left",
+            border = "single",
         })
     end
 }

@@ -27,7 +27,7 @@ function M.attach_to_buffer(bufnr, opts)
                 end
             end
 
-            vim.api.nvim_buf_set_lines(bufnr, 0, -1, false, { "output: " })
+            vim.api.nvim_buf_set_lines(bufnr, 0, -1, false, { "output: ", })
             local append_data = function (_, data)
                 if data then
                     vim.api.nvim_buf_set_lines(bufnr, -1, -1, false, data)
@@ -40,7 +40,10 @@ function M.attach_to_buffer(bufnr, opts)
                 on_stderr = append_data,
             })
 
-            local winId = ui.createWin(bufnr)
+            local winId = ui.createWin(bufnr, {
+                title_pos = opts.title_pos,
+                border = opts.border,
+            })
             vim.keymap.set("n", "<C-c>", function ()
                 if vim.api.nvim_win_is_valid(winId) then
                     vim.api.nvim_win_close(winId, true)
