@@ -16,11 +16,13 @@ return {
     "waternsky/autorun",
     config = function ()
         local autorun = require("autorun")
-        autorun.setup({ 
+        local opts = {
             pythoncmd = "python3",
             title_pos = "left",
             border = "single",
-        })
+        }
+        autorun.setup(opts)
+        autorun.Toggle(opts) -- for disabling Autorun
     end
 }
 ```
