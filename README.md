@@ -8,6 +8,12 @@ Autorun is for you.
 Neovim plugin to run the python and go file on save.
 My first neovim plugin.
 
+## Demo
+
+https://github.com/waternsky/autorun/assets/125210040/8d5c0400-868c-4911-9273-1112e1c6dea7
+
+Ctrl-c to close the floating window.
+
 ## Setup
 
 lazy package manager:
