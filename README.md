@@ -21,11 +21,13 @@ return {
             title_pos = "left",
             border = "single",
         }
-        autorun.setup(opts)
-        autorun.Toggle(opts) -- for disabling Autorun
+        autorun.Toggle(opts) -- for Autorun commands
     end
 }
 ```
+Commands:
+* :AutorunEnable -> to enable (after this result will appear in floating windows in center of screen)
+* :AutorunDisable -> to disable
 
 ## Credits
 * Neovim documentation (spend most of my time here to write this).
